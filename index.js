@@ -11,7 +11,12 @@ module.exports = function(fn) {
 
 			image.toBuffer(function(err, buffer, info) {
 				if (err) return callback(err);
-				headers['Content-Type'] = 'image/' + info.format;
+				delete headers['content-type'];
+				delete headers['Content-Type'];
+				delete headers['content-length'];
+				delete headers['Content-Length'];
+				headers['content-type'] = 'image/' + info.format;
+				headers['content-length'] = info.size;
 				callback(null, buffer, headers);
 			});
 		}
